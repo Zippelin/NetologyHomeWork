@@ -117,39 +117,40 @@ class CourseParticipantStatisticCounter:
             return 'Нет данных'
 
 
-student_1 = Student('Ruoy', 'Eman', 'm')
-student_1.courses_in_progress += ['Python', 'C++']
+if __name__ == '__main__':
+    student_1 = Student('Ruoy', 'Eman', 'm')
+    student_1.courses_in_progress += ['Python', 'C++']
 
-student_2 = Student('Sergant', 'Pain', 'm')
-student_2.courses_in_progress += ['C++']
+    student_2 = Student('Sergant', 'Pain', 'm')
+    student_2.courses_in_progress += ['C++']
 
-reviewer_1 = Reviewer('Entony', 'Cloudfinger')
-reviewer_1.courses_attached += ['C++']
-reviewer_2 = Reviewer('Sunny', 'ElseIffer')
-reviewer_2.courses_attached += ['Python']
+    reviewer_1 = Reviewer('Entony', 'Cloudfinger')
+    reviewer_1.courses_attached += ['C++']
+    reviewer_2 = Reviewer('Sunny', 'ElseIffer')
+    reviewer_2.courses_attached += ['Python']
 
-reviewer_1.rate_hw(student_1, 'C++', 5)
-reviewer_1.rate_hw(student_2, 'C++', 5)
+    reviewer_1.rate_hw(student_1, 'C++', 5)
+    reviewer_1.rate_hw(student_2, 'C++', 5)
 
-reviewer_2.rate_hw(student_1, 'Python', 5)
-reviewer_2.rate_hw(student_2, 'Python', 5)
+    reviewer_2.rate_hw(student_1, 'Python', 5)
+    reviewer_2.rate_hw(student_2, 'Python', 5)
 
-lector_1 = Lecturer('Smarty', 'Newthinker')
-lector_2 = Lecturer('Arry', 'Trycatcher')
-lector_1.courses_attached += ['Python', 'C++']
-lector_2.courses_attached += ['C++']
+    lector_1 = Lecturer('Smarty', 'Newthinker')
+    lector_2 = Lecturer('Arry', 'Trycatcher')
+    lector_1.courses_attached += ['Python', 'C++']
+    lector_2.courses_attached += ['C++']
 
-student_1.rate_lecturer(lector_1, 'Python', 5)
-student_1.rate_lecturer(lector_2, 'C++', 8)
+    student_1.rate_lecturer(lector_1, 'Python', 5)
+    student_1.rate_lecturer(lector_2, 'C++', 8)
 
-student_2.rate_lecturer(lector_1, 'C++', 3)
-student_2.rate_lecturer(lector_2, 'C++', 9)
+    student_2.rate_lecturer(lector_1, 'C++', 3)
+    student_2.rate_lecturer(lector_2, 'C++', 9)
 
-students_list = [student_1, student_2]
-lectors_list = [lector_1, lector_2]
+    students_list = [student_1, student_2]
+    lectors_list = [lector_1, lector_2]
 
-student_statistic = CourseParticipantStatisticCounter(students_list, 'Python')
-lectors_statistic = CourseParticipantStatisticCounter(lectors_list, 'C++')
+    student_statistic = CourseParticipantStatisticCounter(students_list, 'Python')
+    lectors_statistic = CourseParticipantStatisticCounter(lectors_list, 'C++')
 
-print(student_statistic.get_statistic_result())
-print(lectors_statistic.get_statistic_result())
+    print(student_statistic.get_statistic_result())
+    print(lectors_statistic.get_statistic_result())
