@@ -17,9 +17,9 @@ class Student(CourseParticipant):
 
     def rate_lecturer(self, lecturer, course, score):
         if isinstance(lecturer, Lecturer) and (course in self.finished_courses or course in self.courses_in_progress) and score <= 10:
-            if course in lecturer.courses_attached:
+            if course in lecturer.courses_attached and lecturer.scores.get(course) is not None:
                 lecturer.scores[course] += [score]
-            else:
+            elif course in lecturer.courses_attached and lecturer.scores.get(course) is None:
                 lecturer.scores[course] = [score]
         else:
             return 'Ошибка'
@@ -136,6 +136,8 @@ reviewer_2.rate_hw(student_2, 'Python', 5)
 
 lector_1 = Lecturer('Smarty', 'Newthinker')
 lector_2 = Lecturer('Arry', 'Trycatcher')
+lector_1.courses_attached += ['Python', 'C++']
+lector_2.courses_attached += ['C++']
 
 student_1.rate_lecturer(lector_1, 'Python', 5)
 student_1.rate_lecturer(lector_2, 'C++', 8)
