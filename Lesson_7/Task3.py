@@ -3,7 +3,7 @@ import codecs
 
 # константа, чтобы легче проверить было, указав путь до папки  файлами
 SOURCE_FILES_DIR = 'resources//Task3//'
-OUTPUT_FILE = os.path.join(SOURCE_FILES_DIR, 'out.txt')
+OUTPUT_FILE = os.path.join(SOURCE_FILES_DIR, 'out//out.txt')
 
 
 class FilesContentSorter:
