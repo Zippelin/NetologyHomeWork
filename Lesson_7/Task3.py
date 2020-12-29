@@ -53,5 +53,4 @@ class FilesContentSorter:
 
 if __name__ == '__main__':
     sorted_files_content = FilesContentSorter(SOURCE_FILES_DIR)
-   # pprint(sorted_files_content.sort())
     sorted_files_content.sort_and_save()
