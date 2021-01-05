@@ -30,7 +30,7 @@ class StackOverflowSearcher:
         titles_list = []
         while has_more:
             print('Requesting page: ', page)
-            response =requests.get(search_url,
+            response = requests.get(search_url,
                                    params=params)
             response.raise_for_status()
             response = response.json()
