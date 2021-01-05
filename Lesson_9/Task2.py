@@ -5,7 +5,7 @@ TOKEN_FILE = 'resources//token.txt'
 UPLOAD_FILE_DIR = 'resources//data//'
 
 
-class HttpFilesUploader:
+class HttpFilesWorker:
     __base_url = 'https://cloud-api.yandex.net'
     __upload_file_url_path = 'v1/disk/resources/upload'
 
@@ -39,7 +39,7 @@ class YandexDiskFileSynchronizer:
 
     def __init__(self):
         with open('resources/token.txt') as f:
-            self.fu_manager = HttpFilesUploader(f.read())
+            self.fu_manager = HttpFilesWorker(f.read())
 
     def sync_dir(self, dir_name):
         files_list = self.__get_files_path_list(dir_name)
