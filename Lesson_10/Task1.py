@@ -30,7 +30,15 @@ class HttpRequestBuilder:
                                         'user_ids': user_id,
                                   })
             result.raise_for_status()
-            return result.json()['response'][0]
+            result = result.json()
+            if result.get('error') is None:
+                return result['response'][0]
+            else:
+                return {
+                    'id': None
+                    for value in result['error']['request_params']
+                    if value['key'] == 'user_id'
+                }
 
     def get_friends_list(self, user_id):
         if user_id is not None:
@@ -80,24 +88,30 @@ class VKUser:
         return self.http_requester.get_friends_list(self.id)
 
     def __and__(self, other):
-        friends_interception = set(self.get_friends_list()) & set(other.get_friends_list())
-        return [
-            VKUser(friend)
-            for friend in friends_interception
-        ]
+        if self.id is not None:
+            friends_interception = set(self.get_friends_list()) & set(other.get_friends_list())
+            return [
+                VKUser(friend)
+                for friend in friends_interception
+            ]
+        else:
+            return []
 
     def __str__(self):
-        return self.http_requester.get_user_url(self.id)
+        if self.id is not None:
+            return self.http_requester.get_user_url(self.id)
+        else:
+            return 'Empty VKUser user'
 
     def __repr__(self):
         return f'id: {self.id}, url: {self.__str__()}'
 
 
 if __name__ == '__main__':
-    vk1 = VKUser('552934290')
+    vk1 = VKUser('stomumcom')
     pprint(vk1.get_user_info())
 
-    vk2 = VKUser('stomumcom')
+    vk2 = VKUser('id552934290')
     pprint(vk2.get_user_info())
 
     print(vk1 & vk2)
