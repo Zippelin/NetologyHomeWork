@@ -1,19 +1,6 @@
 from profile import VKProfile, InstaProfile, ODNProfile
 from storage import YAStorage, GoogleStorage
-import time
 import shutil
-
-# aa = VKProfile('552934290')
-#
-# albums = aa.get_albums()
-# #print(albums)
-#
-# bb = YAStorage()
-# bb.backup_photos(albums)
-# if __name__ == '__main__':
-#     for i in range(100):
-#         print("", end=f"\rPercentComplete: {i} %")
-#         time.sleep(0.2)
 
 
 class AwesomeBackupper:

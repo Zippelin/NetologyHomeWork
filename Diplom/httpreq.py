@@ -21,7 +21,7 @@ class _ResourcesFactory(Enum):
     TMP_DIR = 'tmp/'
 
 
-class HttpRequester:
+class HttpRequester():
     default_backup_dir = 'AwesomePhotoBackups'
 
     def __init__(self, path, token_file, name):
@@ -35,12 +35,6 @@ class HttpRequester:
 
     def join_url_path(self, *args):
         return '/'.join(args)
-
-    def get_albums(self, user_id, count):
-        pass
-
-    def get_photos_list(self):
-        pass
 
     def get_status(self):
         if self.token != '':
