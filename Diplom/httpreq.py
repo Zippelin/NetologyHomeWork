@@ -126,7 +126,6 @@ class YAHttpWorker(HttpRequester):
 
     def save_report(self, folder, data):
         file_name = f'Log_{datetime.now().strftime("%d-%m-%Y_%H-%M-%S")}.txt'
-        #file_path = self.join_url_path(folder, file_name)
         file_path = pathlib.PureWindowsPath(folder, file_name).__str__()
         print(f'Saving Log File:\nLocaly: {file_name}\nRemotely: {file_path}')
         status_code, upload_url = self.__get_upload_url(file_path)
