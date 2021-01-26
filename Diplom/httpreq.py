@@ -62,8 +62,8 @@ class HttpRequester:
 
 
 class YAHttpWorker(HttpRequester):
-    ENDPOINT_UPLOAD_URL = '/v1/disk/resources/upload'
-    ENDPOINT_GET_DIR = '/v1/disk/resources'
+    ENDPOINT_UPLOAD_URL = 'v1/disk/resources/upload'
+    ENDPOINT_GET_DIR = 'v1/disk/resources'
 
     def __init__(self):
         super(YAHttpWorker, self).__init__('https://cloud-api.yandex.net',
