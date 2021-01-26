@@ -30,18 +30,18 @@ class YAStorage(Storage):
         root_dir = self.requester.create_dir()
         progress_bar.start()
         for user_id, albums in photos_data.items():
-            user_dir = self.requester.create_dir(self.requester.join_url_path(root_dir, str(user_id)))
+            user_dir = self.requester.create_dir(self.requester.join_file_path(root_dir, str(user_id)))
             for album, photos_list in albums.items():
-                album_dir = self.requester.create_dir(self.requester.join_url_path(user_dir, str(album)))
+                album_dir = self.requester.create_dir(self.requester.join_file_path(user_dir, str(album)))
                 for photo in photos_list:
                     progress_bar.announce(str(photo['name']))
                     file_name = str(photo['name'])
                     status_code = self.requester.upload_url(photo['url'],
-                                                            self.requester.join_url_path(album_dir, file_name))
+                                                            self.requester.join_file_path(album_dir, file_name))
                     if status_code == 409:
                         file_name = self.change_filename(file_name)
                         self.requester.upload_url(photo['url'],
-                                                  self.requester.join_url_path(album_dir, file_name))
+                                                  self.requester.join_file_path(album_dir, file_name))
                     progress_bar.step()
                     self._upload_report.append({
                         'file_name': file_name,
@@ -55,7 +55,6 @@ class GoogleStorage(Storage):
         super().__init__(GoogleHttpWorker(), 'Google Drive')
 
     def backup_photos(self, photos_data):
-
         photos_count = photos_data.pop('photos_count')
         progress_bar = ProgressBar(photos_count)
         app_root_id = self.requester.create_dir()   # create app root dir

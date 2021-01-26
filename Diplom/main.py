@@ -65,7 +65,7 @@ if __name__ == '__main__':
         else:
             storage.backup_photos(albums)
 
-        shutil.rmtree('tmp/', ignore_errors=True)
+        shutil.rmtree('tmp/*', ignore_errors=True)
         want_next = ''
         while want_next.lower() not in ['yes', 'no', '0', '1', 'да', 'нет', 'н', 'д', 'n', 'y']:
             want_next = input('Do you wan to continue? (yes\\no)')
@@ -75,3 +75,4 @@ if __name__ == '__main__':
                 want_next.lower() == 'нет' or \
                 want_next.lower() == 'н':
             want_next = False
+            shutil.rmtree('tmp/', ignore_errors=True)
