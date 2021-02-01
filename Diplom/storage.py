@@ -1,5 +1,6 @@
 from httpreq import YAHttpWorker, GoogleHttpWorker
 from datetime import datetime
+import pathlib
 
 
 class Storage:
@@ -27,18 +28,19 @@ class YAStorage(Storage):
         root_dir = self.requester.create_dir()
         progress_bar.start()
         for user_id, albums in photos_data.items():
-            user_dir = self.requester.create_dir(self.requester.join_file_path(root_dir, str(user_id)))
+            user_dir = self.requester.create_dir(pathlib.PurePosixPath(root_dir, str(user_id)).__str__())
             for album, photos_list in albums.items():
-                album_dir = self.requester.create_dir(self.requester.join_file_path(user_dir, str(album)))
+                album_dir = self.requester.create_dir(pathlib.PurePosixPath(user_dir, str(album)).__str__())
                 for photo in photos_list:
                     progress_bar.announce(str(photo['name']))
                     file_name = str(photo['name'])
+
                     status_code = self.requester.upload_url(photo['url'],
-                                                            self.requester.join_file_path(album_dir, file_name))
+                                                            pathlib.PurePosixPath(album_dir, file_name).__str__())
                     if status_code == 409:
                         file_name = self._change_filename(file_name)
                         self.requester.upload_url(photo['url'],
-                                                  self.requester.join_file_path(album_dir, file_name))
+                                                  pathlib.PurePosixPath(album_dir, file_name).__str__())
                     progress_bar.step()
                     self._upload_report.append({
                         'file_name': file_name,

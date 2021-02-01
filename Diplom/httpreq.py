@@ -34,9 +34,6 @@ class HttpRequester:
         path = f'{path[0]}//{"/".join(path[1:])}'
         return path
 
-    def join_file_path(self, *args):
-        return pathlib.PurePosixPath(*args).__str__()
-
 
 class YAHttpWorker(HttpRequester):
     __ENDPOINT_UPLOAD_URL = 'v1/disk/resources/upload'
@@ -100,7 +97,7 @@ class YAHttpWorker(HttpRequester):
 
     def save_report(self, folder, data):
         file_name = f'Log_{datetime.now().strftime("%d-%m-%Y_%H-%M-%S")}.txt'
-        file_path = self.join_file_path(folder, file_name).__str__()
+        file_path = pathlib.PurePosixPath(folder, file_name).__str__()
         print(f'Saving Log File:\nLocaly: {file_name}\nRemotely: {file_path}')
         status_code, upload_url = self.__get_upload_url(file_path)
         if not os.path.exists(self._LOG_DIR):
@@ -165,11 +162,11 @@ class GoogleHttpWorker(HttpRequester):
 
         result = requests.get(file_url)
         result.raise_for_status()
-        with open(self.join_file_path(self._TMP_DIR, name), 'wb') as f:
+        with open(pathlib.PurePosixPath(self._TMP_DIR, name).__str__(), 'wb') as f:
             f.write(result.content)
 
         file = MediaFileUpload(
-            self.join_file_path(self._TMP_DIR, name),
+            pathlib.PurePosixPath(self._TMP_DIR, name).__str__(),
             mimetype='image/jpeg',
             resumable=True
         )
@@ -226,15 +223,16 @@ class GoogleHttpWorker(HttpRequester):
 
     def save_report(self, root_dir, data, saved_dir_name):
         file_name = f'Log_{datetime.now().strftime("%d-%m-%Y_%H-%M-%S")}.txt'
-        file_path = self.join_file_path(self._DEFAULT_BACKUP_DIR, str(saved_dir_name), str(file_name))
+
+        file_path = pathlib.PurePosixPath(self._DEFAULT_BACKUP_DIR, str(saved_dir_name), str(file_name)).__str__()
         print(f'Saving Log File:\nLocaly: {file_name}\nRemotely: {file_path}')
         if not os.path.exists(self._LOG_DIR):
             os.mkdir(self._LOG_DIR)
-        with open(self.join_file_path(self._LOG_DIR, file_name), 'w') as f:
+        with open(pathlib.PurePosixPath(self._LOG_DIR, file_name).__str__(), 'w') as f:
             f.write(json.dumps(data))
 
         file = MediaFileUpload(
-            self.join_file_path(self._LOG_DIR, file_name),
+            pathlib.PurePosixPath(self._LOG_DIR, file_name).__str__(),
             mimetype='text/plain',
             resumable=True
         )
