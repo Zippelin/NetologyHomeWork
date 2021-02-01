@@ -7,14 +7,11 @@ class Storage:
         self.requester = requester
         self._upload_report = []
         self.name = name
+        if self.requester.token == "":
+            quit()
+        print(f'\t{self.name} Token load Success')
 
-    def save_report(self, save_dit, data):
-        self.requester.save_log(save_dit, data)
-
-    def get_init_status(self):
-        return self.requester.get_status()
-
-    def change_filename(self, file_name):
+    def _change_filename(self, file_name):
         file_name = str(file_name).split('.')
         file_name = f'{file_name[0]}_{str(datetime.now().strftime("%d-%m-%Y_%H.%M.%S"))}.{file_name[1]}'
         return file_name
@@ -39,7 +36,7 @@ class YAStorage(Storage):
                     status_code = self.requester.upload_url(photo['url'],
                                                             self.requester.join_file_path(album_dir, file_name))
                     if status_code == 409:
-                        file_name = self.change_filename(file_name)
+                        file_name = self._change_filename(file_name)
                         self.requester.upload_url(photo['url'],
                                                   self.requester.join_file_path(album_dir, file_name))
                     progress_bar.step()
@@ -68,7 +65,7 @@ class GoogleStorage(Storage):
                     progress_bar.announce(file_name)
                     status_code = self.requester.upload_file(photo['url'], photo['name'], album_id)
                     if status_code == 409:
-                        file_name = self.change_filename(file_name)
+                        file_name = self._change_filename(file_name)
                         _ = self.requester.upload_file(photo['url'], file_name, album_id)
                     progress_bar.step()
 

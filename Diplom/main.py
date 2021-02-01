@@ -3,9 +3,6 @@ from storage import YAStorage, GoogleStorage
 import shutil
 
 if __name__ == '__main__':
-    vk_profiler = None
-    odn_profiler = None
-    insta_profiler = None
     ya_storage = YAStorage()
     google_storage = GoogleStorage()
 
@@ -21,14 +18,10 @@ if __name__ == '__main__':
     }
 
     want_next = True
+    print()
     while want_next:
         print('Welcome to photo backupper for social networks')
         print('System Status:')
-        for k, v in storage_menu_factory.items():
-            storage_status = v.get_init_status()
-            if not storage_status:
-                break
-        print()
 
         storage = ''
         profiler = ''
@@ -43,23 +36,16 @@ if __name__ == '__main__':
         profiler = profiler_menu_factory[profiler]
         storage = storage_menu_factory[storage]
 
-        user_id = input('Enter User Id:\n')
-
-        profiler = profiler(user_id)
+        user_id = input('Enter User Id:\n:>')
 
         print('System Status:')
-        if not profiler.get_init_status():
-            break
+        profiler = profiler(user_id)
 
         while not count_filter.isdigit():
             count_filter = input('Enter size slice limit( 0 - no limits)\n:>')
 
-        if count_filter == '0':
-            count_filter = None
-        else:
-            count_filter = int(count_filter)
+        albums = profiler.get_albums(int(count_filter))
 
-        albums = profiler.get_albums(count_filter)
         if albums['photos_count'] == 0:
             print('No photos found, maybe profile is private.')
         else:
