@@ -23,9 +23,7 @@ if __name__ == '__main__':
         print('Welcome to photo backupper for social networks')
         print('System Status:')
 
-        storage = ''
-        profiler = ''
-        count_filter = ''
+        storage = profiler = count_filter = ''
 
         while profiler not in profiler_menu_factory.keys():
             profiler = input('Please enter network\n\t1 = Vk\n\t2 = Odnoklasniki\n\t3 = Instagram\n:>')

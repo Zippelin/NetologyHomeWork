@@ -223,7 +223,6 @@ class GoogleHttpWorker(HttpRequester):
 
     def save_report(self, root_dir, data, saved_dir_name):
         file_name = f'Log_{datetime.now().strftime("%d-%m-%Y_%H-%M-%S")}.txt'
-
         file_path = pathlib.PurePosixPath(self._DEFAULT_BACKUP_DIR, str(saved_dir_name), str(file_name)).__str__()
         print(f'Saving Log File:\nLocaly: {file_name}\nRemotely: {file_path}')
         if not os.path.exists(self._LOG_DIR):
