@@ -12,8 +12,7 @@ import pathlib
 
 
 class HttpRequester:
-    default_backup_dir = 'AwesomePhotoBackups'
-
+    _DEFAULT_BACKUP_DIR = 'AwesomePhotoBackups'
     _VK_TOKEN = 'resources/vk_token.txt'
     _YA_TOKEN = 'resources/ya_token.txt'
     _GOOGLE_TOKEN = 'resources/google_token.json'
@@ -83,7 +82,7 @@ class YAHttpWorker(HttpRequester):
 
     def create_dir(self, folder=None):
         if folder is None:
-            folder = self.default_backup_dir
+            folder = self._DEFAULT_BACKUP_DIR
         else:
 
             folder = folder
@@ -204,7 +203,7 @@ class GoogleHttpWorker(HttpRequester):
         root_folder_id = self.service.files().get(fileId='root').execute().get('id')
 
         if folder_name is None or root_folder is None:
-            folder = self.default_backup_dir
+            folder = self._DEFAULT_BACKUP_DIR
         else:
             folder = folder_name
             root_folder_id = root_folder
@@ -227,7 +226,7 @@ class GoogleHttpWorker(HttpRequester):
 
     def save_report(self, root_dir, data, saved_dir_name):
         file_name = f'Log_{datetime.now().strftime("%d-%m-%Y_%H-%M-%S")}.txt'
-        file_path = self.join_file_path(self.default_backup_dir, str(saved_dir_name), str(file_name))
+        file_path = self.join_file_path(self._DEFAULT_BACKUP_DIR, str(saved_dir_name), str(file_name))
         print(f'Saving Log File:\nLocaly: {file_name}\nRemotely: {file_path}')
         if not os.path.exists(self._LOG_DIR):
             os.mkdir(self._LOG_DIR)
